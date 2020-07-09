@@ -1,0 +1,20 @@
+
+h5 transaction creaate
+
+form(action='/transactions/create' method="post")
+  lable user
+  select(name="userId") 
+   each val in user 
+    option( value=val._id)=val.name
+      
+   
+  br
+  lable book
+  select(name="bookId")
+   each val in book
+    option(value=val._id)=val.title
+       
+   
+
+  button(type='submit') create
+  

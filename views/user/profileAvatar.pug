@@ -1,0 +1,35 @@
+extends ../layouts/common.pug
+block content
+    link#bootstrap-css(href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js')
+    script(src='//code.jquery.com/jquery-1.11.1.min.js')
+    // ---- Include the above in your HEAD tag --------
+    .container
+      .row
+        .col-xs-12.col-sm-6.col-md-6
+          .well.well-sm
+            .row
+              .col-sm-6.col-md-4
+          
+                 if value.avatarUrl
+                  a(href='/users/profile/avatar/'+value._id)
+                    img.img-rounded.img-responsive(src=value.avatarUrl alt='')
+                 else
+                  a(href='/users/profile/avatar/'+value._id)
+                    img.img-rounded.img-responsive(src='http://placehold.it/380x500' alt='')
+              .col-sm-6.col-md-8
+                 form(method="POST" ,enctype="multipart/form-data")
+                  .form-group
+                    input(name="id",type="text",value= value._id,style="display:none")
+                    label(for='exampleFormControlFile1') Update Avatar 
+                    input#exampleFormControlFile1.form-control-file(type='file',name="avatar")  
+                    button.btn.btn-primary.mb-2.mt-5(type='submit') Update
+
+
+    style.
+      .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
+      small {
+      display: block;
+      line-height: 1.428571429;
+      color: #999;
+      }

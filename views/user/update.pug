@@ -1,0 +1,10 @@
+extends ../layouts/common.pug
+block content
+  form(action='/users/update' method="post")
+    input(name="id",type="text",value=value.id,style="display:none")
+    lable name
+    input(name="name",type="text" value=value.name)
+    br 
+
+    button update
+  

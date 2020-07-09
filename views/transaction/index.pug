@@ -1,0 +1,19 @@
+extends ../layouts/common.pug
+block content
+    h5 Transactions
+    if error
+      each val in error 
+        .alert.alert-danger=error
+    a(href="/transactions/create") create
+    ul 
+      each val in trans
+        li 
+          span=val.user 
+          span -
+          span=val.book
+          span &nbsp
+          if val.isComplete
+           span(style='color: #1e7e34;') da tra sach
+
+          else
+             a(href='/transactions/'+val.id+'/complete') complete

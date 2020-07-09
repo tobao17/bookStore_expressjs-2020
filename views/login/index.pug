@@ -1,0 +1,32 @@
+link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet')
+script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
+script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+// ---- Include the above in your HEAD tag --------
+#login
+  h3.text-center.text-white.pt-5 Login form
+  .container
+    #login-row.row.justify-content-center.align-items-center
+      #login-column.col-md-6
+        #login-box.col-md-12
+          if error
+            each val in error
+              .alert.alert-danger=val
+          form#login-form.form(action='' method='post')
+            h3.text-center.text-info Login
+            .form-group
+              label.text-info(for='email') Email:
+              br
+              input#username.form-control(type='text' name='email')
+            .form-group
+              label.text-info(for='password') Password:
+              br
+              input#password.form-control(type='text' name='password')
+            .form-group
+              label.text-info(for='remember-me')
+                span Remember me
+                span
+                  input#remember-me(name='remember-me' type='checkbox')
+              br
+              input.btn.btn-info.btn-md(type='submit' name='submit' value='submit')
+            #register-link.text-right
+              a.text-info(href='#') Register here

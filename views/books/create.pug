@@ -1,0 +1,20 @@
+
+
+
+extends ../layouts/common.pug
+block content
+
+  h3 Create books
+  .container
+        
+    form(action='/books/create' method="POST",enctype="multipart/form-data")
+        .form-group
+          label(for='title') Title
+          input#exampleInputEmail1.form-control(type='text' name="title" aria-describedby='emailHelp' )
+        .form-group
+          label(for='description') Description
+          input#exampleInputPassword1.form-control(type='text' name="description" )
+        .form-group
+          label(for='books') image
+          input#exampleFormControlFile1.form-control-file(type='file',name="books",placeholder='Description')
+        button.btn.btn-primary(type='submit') Create

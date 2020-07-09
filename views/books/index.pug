@@ -1,0 +1,27 @@
+extends ../layouts/common.pug
+block content
+  div
+    div.mb-3
+      h3(style='display:inline') bookstore
+      a.btn.btn-primary.ml-2.p-0(href='/books/create') new
+   
+  .container 
+    .card-columns(style='column-count: 4;')
+       each val in book
+          .card
+            img.card-img-top.img-fluid.img-thumbnail(src=val.imageBookurl alt='Card image cap' style='height: 256px;width: 259px;')
+            .card-body
+              h5.card-title=val.title
+              p.card-text=val.description
+                | 
+            .card-footer
+              if isAdmin
+                   a.btn.btn-primary.mr-2(href='books/update/'+val._id) update
+                   a.btn.btn-danger(href='books/delete/'+val._id) delete
+              else
+                   a.btn.btn-primary.mr-2(href='cart/addtocart/'+val._id) Add to cart
+
+                 
+  style.
+    
+    

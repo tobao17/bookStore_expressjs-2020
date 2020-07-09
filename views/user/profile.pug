@@ -1,0 +1,54 @@
+
+extends ../layouts/common.pug
+block content
+    link#bootstrap-css(href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js')
+    script(src='//code.jquery.com/jquery-1.11.1.min.js')
+    // ---- Include the above in your HEAD tag --------
+    .container
+      .row
+        .col-xs-12.col-sm-6.col-md-6
+          .well.well-sm
+            .row
+              .col-sm-6.col-md-4
+                if value.avatarUrl
+                  a(href='/users/profile/avatar/'+value._id)
+                    img.img-rounded.img-responsive(src=value.avatarUrl alt='')
+                else
+                  a(href='/users/profile/avatar/'+value._id)
+                    img.img-rounded.img-responsive(src='http://placehold.it/380x500' alt='')
+              .col-sm-6.col-md-8
+                h4=value.name
+                  |
+                small
+                  cite(title='San Francisco, USA')
+                    | San Francisco, USA 
+                    i.glyphicon.glyphicon-map-marker
+                p
+                  i.glyphicon.glyphicon-envelope=' '+value.email
+                  br
+                  i.glyphicon.glyphicon-globe
+                  a(href='https://school.coders-x.com') school.coders-x.com
+                  br
+                  i.glyphicon.glyphicon-gift
+                  | June 02, 1999
+                // Split button
+                .btn-group
+                 
+                  ul.dropdown-menu(role='menu')
+                    li
+                      a(href='#') Twitter
+                    li
+                      a(href='https://plus.google.com/+Jquery2dotnet/posts') Google +
+                    li
+                      a(href='https://www.facebook.com/jquery2dotnet') Facebook
+                    li.divider
+                    li
+                      a(href='#') Github
+    style.
+      .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
+      small {
+      display: block;
+      line-height: 1.428571429;
+      color: #999;
+      }
