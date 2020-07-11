@@ -5,32 +5,6 @@ const User = require('../model/users.model');
 const Book = require('../model/books.model');
 module.exports.index = async(req, res) => {
 
-    //var userCookie = db.get('user').find({ id: req.signedCookies.userId }).value();
-    // var userCookie = User.findById(req.signedCookies.userId);
-    // if (!userCookie.isAdmin) {
-    //     let detailTransaction = await db.get('transactions').filter({ userId: userCookie.id }).value().map(x => {
-    //         return {
-
-    //             user: db.get('user').find({ "id": x.userId }).value().name,
-    //             book: db.get('books').find({ id: x.bookId }).value().title,
-    //             id: x.id,
-    //             isComplete: x.isComplete
-    //         }
-    //     })
-
-    //     res.render('./transaction/index', { trans: detailTransaction });
-    //     return;
-    // }
-
-    // let detailTransaction = await db.get('transactions').value().map(x => {
-    //     return {
-
-    //         user: db.get('user').find({ "id": x.userId }).value().name,
-    //         book: db.get('books').find({ "id": x.bookId }).value().title,
-    //         id: x.id,
-    //         isComplete: x.isComplete
-    //     }
-    // })
     let detailTransaction = await transactions.find();
     var  TransactionpromiseAll = await Promise.all(detailTransaction.map(async x => {   //nho cai lol nay
         try {
@@ -67,12 +41,14 @@ module.exports.postCreate = async(req, res) => {
 
     // req.body.id = shortId.generate();
     await transactions.create(req.body);
-    // db.get('transactions').push(req.body).write();
+
 
     res.redirect('./');
 }
 module.exports.isComplete = async(req, res) => {
+    
     var error = [];
+   
     let detailTransaction = await transactions.find();
     var  TransactionpromiseAll = await Promise.all(detailTransaction.map(async x => {   //nho cai lol nay
         try {
@@ -82,7 +58,7 @@ module.exports.isComplete = async(req, res) => {
         //console.log(user
          
         } catch (error) {
-            console.log(error + '')
+            // console.log(error + '')
         }
         return {
             book:book.title,
@@ -94,17 +70,23 @@ module.exports.isComplete = async(req, res) => {
     })) 
 
 
-    var x = transactions.findById(req.params.id)
+    var x =await transactions.findById(req.params.id)
+    console.log(x);
     if (!x) {
         error.push('ban da thao tac sai')
 
     }
-    if (error.length) {
+ 
+    if (error.length>0) {
         console.log(error)
         res.render('./transaction/index', { trans:TransactionpromiseAll, error: error });
     }
-    console.log(error)
-    await transactions.updateOne({"_id":req.params.id},{"isComplete":true})
+    console.log(req.params.id)
+   var x= await transactions.updateOne({"_id":req.params.id},{"isComplete":true})
+   //var y =await transactions.findById(req.params.id)
+               
+//    console.log(x)
+
     res.redirect('/transactions')
 
 }

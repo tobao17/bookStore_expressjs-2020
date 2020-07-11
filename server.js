@@ -30,7 +30,7 @@ app.get('/', (req, res) => { res.render('home/index.pug') })
 app.use('/auth', authRouter)
 app.use('/users', validateCookie.setCookie, errorPemission.permission, userRouter)
 app.use('/books', bookRouter) //validateCookie.setCookie,errorPemission.permission,  
-app.use('/transactions', validateCookie.setCookie, transactionRouter);
+app.use('/transactions',  validateCookie.setCookie,transactionRouter);
 app.use('/cart', cartRouter)
 
 // listen for requests :)
