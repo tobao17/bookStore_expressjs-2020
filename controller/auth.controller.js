@@ -1,5 +1,4 @@
-var db = require('../db.js');
-var md5 = require('md5');
+
 const User = require('../model/users.model');
 const bcryptjs = require('bcryptjs');
 const { parseInt } = require('../db.js');

@@ -1,5 +1,6 @@
-var db=require('../db.js');
-
+//var db=require('../db.js');
+const Session = require('../model/session.model');
+const User = require('../model/users.model');
 const shortId = require('shortid');
 module.exports.session=async(req,res,next)=>{
  if (!req.signedCookies.sessionId){
@@ -7,11 +8,14 @@ module.exports.session=async(req,res,next)=>{
    res.cookie('sessionId',sessionId,{
      signed:true
    } )
- await  db.get('session').push({id:sessionId}).write(); 
+ await  Session.create({"id":sessionId}); 
 
    
  } 
-var user= await db.get('user').find({ id:req.signedCookies.userId}).value();
+
+var user= await User.findById(req.signedCookies.userId)
+
+
 res.locals.user=user;
 if(user)
   {

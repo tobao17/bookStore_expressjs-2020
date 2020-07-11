@@ -1,7 +1,8 @@
 const shortId = require('shortid');
-var db = require('../db.js');
+// var db = require('../db.js');
 const User = require('../model/users.model');
 const bcryptjs = require('bcryptjs');
+const transactions = require('../model/transactions.model');
 
 require("dotenv").config();
 var cloudinary = require('cloudinary').v2;
@@ -34,7 +35,9 @@ module.exports.update = async(req, res) => {
 module.exports.delete = async(req, res) => {
     //  db.get('user').remove({ "id": req.params.id }).value();
     await User.findByIdAndDelete(req.params.id);
-    db.get('transactions').remove({ "userId": req.params.id }).value();
+    // db.get('transactions').remove({ "userId": req.params.id }).value();
+ 
+    await transactions.deleteMany({"userId":req.params.id})
     res.redirect('/users');
 }
 module.exports.create = (req, res) => {

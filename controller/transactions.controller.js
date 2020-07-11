@@ -1,5 +1,5 @@
-const shortId = require('shortid');
-var db = require('../db.js');
+// const shortId = require('shortid');
+// var db = require('../db.js');
 const transactions = require('../model/transactions.model');
 const User = require('../model/users.model');
 const Book = require('../model/books.model');
@@ -82,7 +82,7 @@ module.exports.isComplete = async(req, res) => {
         res.render('./transaction/index', { trans:TransactionpromiseAll, error: error });
     }
     console.log(req.params.id)
-   var x= await transactions.updateOne({"_id":req.params.id},{"isComplete":true})
+   var x= await transactions.updateOne({"_id":req.params.id},{"isComplete":true}) //phai co trong model moi sua duoc
    //var y =await transactions.findById(req.params.id)
                
 //    console.log(x)

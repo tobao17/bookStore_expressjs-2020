@@ -19,7 +19,8 @@
              console.log(err);
          return;
      })
-     db.get('transactions').remove({ "bookId": req.params.id }).value();
+    // db.get('transactions').remove({ "bookId": req.params.id }).value();
+    await transactions.deleteMany({"bookId":req.params.id})
      res.redirect('/books');
  }
  module.exports.update = async(req, res) => {
