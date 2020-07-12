@@ -16,10 +16,13 @@ const cookieParser = require('cookie-parser');
 const validateCookie = require('./validate/cookie.validate');
 const errorPemission = require('./validate/permission.validate');
 const sessionValidate = require('./validate/session.validate.js');
-
+const apiUserRouter=require('./api/router/user.router')
+const apiTransactionRouter=require('./api/router/transaction.router')
 app.set('view engine', 'pug');
 app.use(express.static('public'));
+
 app.use(cookieParser('hoctaicoderx...'));
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -33,6 +36,8 @@ app.use('/users', validateCookie.setCookie, errorPemission.permission, userRoute
 app.use('/books', bookRouter) //validateCookie.setCookie,errorPemission.permission,  
 app.use('/transactions',  validateCookie.setCookie,transactionRouter);
 app.use('/cart', cartRouter)
+app.use('/api/user',apiUserRouter);
+app.use('/api/transaction',apiTransactionRouter);
 
 // listen for requests :)
 app.listen(3000, () => {
