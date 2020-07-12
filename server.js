@@ -6,6 +6,7 @@ const app = express();
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.Mongo_URL, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.set('useFindAndModify', false);
 const userRouter = require('./router/user.router.js');
 const bookRouter = require('./router/book.router.js');
 const transactionRouter = require('./router/transaction.router.js');

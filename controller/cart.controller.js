@@ -1,9 +1,10 @@
 //var db=require('../db.js');
 const Session = require('../model/session.model');
 const Book = require('../model/books.model');
+const transactions = require('../model/transactions.model');
 const shortId = require('shortid');
 const { session } = require('../validate/session.validate');
-const { countDocuments } = require('../model/session.model');
+const { countDocuments, find, findOne } = require('../model/session.model');
 module.exports.index=async (req,res)=>{
    var sessionId=req.signedCookies.sessionId;
     if(!sessionId) 
@@ -11,26 +12,22 @@ module.exports.index=async (req,res)=>{
       res.redirect('/books');
       return ;
     }
-
-
-  //var productSession = db.get('session').find({id:sessionId}).value();
-  var productSession = await Session.find({"id":sessionId})
+  var productSession = await Session.findOne({"id":sessionId})
   
-  
+  console.log(productSession)
   var productBook=[];
   if (productSession.cart)
     {
        for (let val in productSession.cart)
     {
 
-     // var x=  db.get('books').find({id:val}).value();
-      var x =await Book.findById(val).value();
+      var x =await Book.findById(val);
       x.count=productSession.cart[val];
       productBook.push (x);
     }
  
   }
-  console.log(productBook);
+  //console.log(productBook);
   
   res.render('cart/index.pug',{product:productBook});
 }
@@ -43,53 +40,38 @@ module.exports.addToCart=async(req,res)=>{
       return ;
     }
 
-  // var count = db.get('session').find({id:sessionId})
-  // .get('cart.'+ bookId,0).value();
-  // db.get('session').find({id:sessionId})
-  // .set('cart.'+ bookId,count+1)
-  // .write();
-  //console.log(sessionId);
-   //var a=await Session.find({"id":sessionId}).('cart.'+bookId,1);
-  
-var x =await Session.findOne({ "id": sessionId });
-var sessionCount={}
-sessionCount= x['cart'].find(item=>item.bookId===bookId);
+ //cach 1
+//  var session = await Session.findById(sessionId);
+// session.cart[productId] = session.cart[productId] + 1;
+// await session.save();
 
- if (!sessionCount.count)
- {
-   sessionCount.count=0;
- }
- console.log(sessionCount);
+//chu y cai nay
+await Session.findOneAndUpdate({"id":sessionId}, {
+	$inc: {   //khon vcl chu y $inc
+		['cart.' + bookId]: 1
+	}
+});
 
- var a= await Session.updateOne({ "id": sessionId }, { $push: { cart: {
-    bookId:bookId,
-    count:sessionCount.count+1
-  } } });
-  
-  res.redirect('/books');
-  
+res.redirect('/books')
 }
-module.exports.checkout=(req,res)=>{
+module.exports.checkout=async(req,res)=>{
   var sessionId=req.signedCookies.sessionId;
   if (!req.signedCookies.userId)
     {
       res.redirect('/auth/login')
       return;
     }
-   var productSession = db.get('session').find({id:sessionId}).value();
+   var productSession =await Session.findOne({"id":sessionId})
   for (let val in productSession.cart)
     {
       var bookUser={};
-       bookUser.id=shortId.generate();
-      
+      bookUser.id=val
       bookUser.count=productSession.cart[val];
       bookUser.userId=req.signedCookies.userId;
       bookUser.bookId=val
-      db.get('transactions').push(bookUser).write(); 
+      transactions.create(bookUser)
     }
-  db.get('session').find({id:sessionId})
-  .assign({ cart:{}})
-  .write()
+await Session.updateOne({"id":sessionId},{"cart":{}})
 
 res.redirect('/books');
 }
