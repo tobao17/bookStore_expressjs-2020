@@ -2,14 +2,15 @@ require('dotenv').config()
 
 const express = require('express');
 const app = express();
-var MongoClient = require('mongodb').MongoClient;
+
 
 var uri = process.env.Mongo_URL
 
 
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-mongoose.connect(process.env.Mongo_URL, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.Mongo_URL, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => console.log("Connected to MongoDB..."))
+.catch((err) => console.error(`Connection failed...`, err));
 mongoose.set('useFindAndModify', false);
 const userRouter = require('./router/user.router.js');
 const bookRouter = require('./router/book.router.js');
