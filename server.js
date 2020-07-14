@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 
 
-var uri = process.env.Mongo_URL
 
 
 var bodyParser = require('body-parser');
@@ -46,6 +45,6 @@ app.use('/api/transaction',apiTransactionRouter);
 
 var port =process.env.PORT||3000
 // listen for requests :)
-app.listen(3000, () => {
-    console.log("Server listening on port " + 3000);
+app.listen(port, () => {
+    console.log("Server listening on port " + port);
 });
