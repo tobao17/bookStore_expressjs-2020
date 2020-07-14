@@ -39,7 +39,7 @@ app.use('/cart', cartRouter)
 app.use('/api/user',apiUserRouter);
 app.use('/api/transaction',apiTransactionRouter);
 
-var port =process.env.port||3000
+var port =process.env.PORT||3000
 // listen for requests :)
 app.listen(3000, () => {
     console.log("Server listening on port " + 3000);
