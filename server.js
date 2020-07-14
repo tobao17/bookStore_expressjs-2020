@@ -5,9 +5,7 @@ const app = express();
 var MongoClient = require('mongodb').MongoClient;
 
 var uri = process.env.Mongo_URL
-MongoClient.connect(uri, function(err, db) {
-  db.close();
-});
+
 
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
