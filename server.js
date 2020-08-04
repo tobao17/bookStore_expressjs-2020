@@ -22,6 +22,7 @@ const errorPemission = require('./validate/permission.validate');
 const sessionValidate = require('./validate/session.validate.js');
 const apiUserRouter=require('./api/router/user.router')
 const apiTransactionRouter=require('./api/router/transaction.router')
+const apiBookRouter=require('./api/router/books.router')
 app.set('view engine', 'pug');
 app.use(express.static('public'));
 
@@ -42,6 +43,7 @@ app.use('/transactions',  validateCookie.setCookie,transactionRouter);
 app.use('/cart', cartRouter)
 app.use('/api/user',apiUserRouter);
 app.use('/api/transaction',apiTransactionRouter);
+app.use('/api/books',apiBookRouter);
 
 var port =process.env.PORT||3000
 // listen for requests :)
