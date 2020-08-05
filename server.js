@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.Mongo_URL, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => console.log("Connected to MongoDB..."))
 .catch((err) => console.error(`Connection failed...`, err));
 mongoose.set('useFindAndModify', false);
+var cors = require('cors')
 const userRouter = require('./router/user.router.js');
 const bookRouter = require('./router/book.router.js');
 const transactionRouter = require('./router/transaction.router.js');
@@ -28,7 +29,7 @@ app.use(express.static('public'));
 
 app.use(cookieParser('hoctaicoderx...'));
 
-
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
